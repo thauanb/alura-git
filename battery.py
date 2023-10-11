@@ -1,23 +1,23 @@
-import psutil
-import time
 from os import system
+import time
+import psutil
 from plyer import notification
 from colorama import Fore, Style
 
 
 # Set the colors
-green = Fore.GREEN
-red = Fore.RED
-yellow = Fore.YELLOW
-style_reset = Style.RESET_ALL
+COLOR_GREEN = Fore.GREEN
+COLOR_RED = Fore.RED
+COLOR_YELLOW = Fore.YELLOW
+STYLE_RESET = Style.RESET_ALL
 # Symbols
-simbol_ok = f'[{green}+{style_reset}]'
-simbol_fail = f'[{red}-{style_reset}]'
-simbol_loading = f'[{red}.{style_reset}]'
-simbol_exclamation = f'[{red}!{style_reset}]'
+SIMBOL_OK = f'[{COLOR_GREEN}+{STYLE_RESET}]'
+SIMBOL_FAIL = f'[{COLOR_RED}-{STYLE_RESET}]'
+SIMBOL_LOADING = f'[{COLOR_RED}.{STYLE_RESET}]'
+SYMBOL_EXCLAMATION = f'[{COLOR_RED}!{STYLE_RESET}]'
 
 
-def limparTela() -> None:
+def limpar_tela() -> None:
     system('cls')
 
 
@@ -28,19 +28,19 @@ def check() -> bool:
     try:
         battery = psutil.sensors_battery()
     except:
-        print(f'{simbol_fail} Erro ao verificar a bateria')
+        print(f'{SIMBOL_FAIL} Erro ao verificar a bateria')
         battery = None
     try:
         plugged = battery.power_plugged
     except:
-        print(f'{simbol_fail} Erro ao verificar se está conectado')
+        print(f'{SIMBOL_FAIL} Erro ao verificar se está conectado')
 
     percent = int(battery.percent)
-    isplugged = f"{simbol_ok} Conectado" if plugged == True else f"{simbol_fail} Desconectado"
+    isplugged = f"{SIMBOL_OK} Conectado" if plugged == True else f"{SIMBOL_FAIL} Desconectado"
     if (percent <= 50):
-        print(f'{simbol_exclamation} Bateria   -> {red}{percent}{style_reset} %')
+        print(f'{SYMBOL_EXCLAMATION} Bateria {COLOR_RED}{percent}{STYLE_RESET} %')
     elif (percent > 50):
-        print(f'{simbol_loading} Bateria   -> {yellow}{percent}{style_reset} %')
+        print(f'{SIMBOL_LOADING} Bateria {COLOR_YELLOW}{percent}{STYLE_RESET} %')
 
     if (percent == 100) and (plugged == True):
         notification.notify(
@@ -53,15 +53,13 @@ def check() -> bool:
 
 def run(mode: bool, minutes_to_wait: int = 5):
     while mode == True:
-        limparTela()
+        limpar_tela()
         print('======== Battery Saver ========\n ')
         check()
-        print()
-        print(f'{simbol_exclamation} Verificando a cada {minutes_to_wait}min ...')
+        print(f'{SYMBOL_EXCLAMATION} Verificando a cada {minutes_to_wait}min ...')
         time.sleep(minutes_to_wait*60)
         check()
 
 
-if __name__ == '__main__':
-    system('title Battery Saver')
-    run(True, 10)
+system('title Battery Saver')
+run(True, 10)

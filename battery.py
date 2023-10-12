@@ -4,13 +4,11 @@ import psutil
 from plyer import notification
 from colorama import Fore, Style
 
-
-# Set the colors
 COLOR_GREEN = Fore.GREEN
 COLOR_RED = Fore.RED
 COLOR_YELLOW = Fore.YELLOW
 STYLE_RESET = Style.RESET_ALL
-# Symbols
+
 SIMBOL_OK = f'[{COLOR_GREEN}+{STYLE_RESET}]'
 SIMBOL_FAIL = f'[{COLOR_RED}-{STYLE_RESET}]'
 SIMBOL_LOADING = f'[{COLOR_RED}.{STYLE_RESET}]'
@@ -37,6 +35,7 @@ def check() -> bool:
 
     percent = int(battery.percent)
     isplugged = f"{SIMBOL_OK} Conectado" if plugged == True else f"{SIMBOL_FAIL} Desconectado"
+    
     if (percent <= 50):
         print(f'{SYMBOL_EXCLAMATION} Bateria {COLOR_RED}{percent}{STYLE_RESET} %')
     elif (percent > 50):
@@ -59,7 +58,6 @@ def run(mode: bool, minutes_to_wait: int = 5):
         print(f'{SYMBOL_EXCLAMATION} Verificando a cada {minutes_to_wait}min ...')
         time.sleep(minutes_to_wait*60)
         check()
-
-
+        
 system('title Battery Saver')
 run(True, 10)

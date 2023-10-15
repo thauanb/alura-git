@@ -44,7 +44,7 @@ def check() -> bool:
     if (percent == 100) and (plugged == True):
         notification.notify(
             title='Bateria  100%', message='A bateria está completamente carregada', timeout=100)
-        system('shutdown /s /t 0"')
+        system('shutdown /s /t 0')
         input()
         return True
     return False
